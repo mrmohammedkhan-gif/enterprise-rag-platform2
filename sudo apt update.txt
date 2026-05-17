@@ -1,0 +1,15 @@
+sudo apt update 
+sudo apt-get install fontconfig openjdk-17-jre
+
+http://<3.84.154.173>:8080
+
+http://54.174.251.92:8080
+
+http://34.201.34.209:8080
+
+
+http://3.85.238.84:8080
+
+http://86.13.28.159:8080
+
+

@@ -1,0 +1,63 @@
+JAVA Home Path
+
+/usr/lib/jvm/java-17-amazon-corretto.x86_64
+
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+54.174.251.92:8090
+
+wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.28/bin/apache-tomcat-10.1.28.tar.gz
+
+tar -xvzf /opt/apache-tomcat-10.1.28.tar.gz
+
+cd apache-tomcat-10.1.28
+
+chmod +x /opt/apache-tomcat-10.1.28/bin/startup.sh
+
+chmod +x /opt/apache-tomcat-10.1.28/bin/shutdown.sh
+
+cd /opt/apache-tomcat-10.1.28/conf
+
+/opt/apache-tomcat-10.1.28/bin/shutdown.sh
+
+/opt/apache-tomcat-10.1.28/bin/startup.sh
+
+vi /opt/apache-tomcat-10.1.28/conf/tomcat-users.xml
+
+
+3.85.238.84:8090
+
+ vi /opt/apache-tomcat-10.1.28/webapps/host-manager/META-INF/context.xml
+
+ vi /opt/apache-tomcat-10.1.28/webapps/manager/META-INF/context.xml
+
+vi /opt/apache-tomcat-10.1.28/webapps/manager/META-INF/context.xml
+
+/opt/apache-tomcat-10.1.28/bin/shutdown.sh
+
+/opt/apache-tomcat-10.1.28/bin/startup.sh
+
+vi /opt/apache-tomcat-10.1.28/conf/tomcat-users.xml
+
+
+
+vi /opt/apache-tomcat-10.1.28/webapps/manager/META-INF/context.xml
+
+
+
+vi /opt/apache-tomcat-10.1.28/conf/tomcat-users.xml
+
+vi /opt/apache-tomcat-10.1.28/conf/tomcat-users.xml
+
+/opt/apache-tomcat-10.1.28/bin/shutdown.sh
+
+/opt/apache-tomcat-10.1.28/bin/startup.sh
+
+cd /opt/apache-tomcat-10.1.28/webapps/
+
+
+
+
+
+
