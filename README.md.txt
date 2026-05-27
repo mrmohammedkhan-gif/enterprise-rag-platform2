@@ -1,5 +1,9 @@
 ## Observability
 
-This project integrates Phoenix observability to inspect LLM traces, prompts, responses, latency, and retrieval behavior.
+This project integrates Phoenix observability for:
 
-![Phoenix Observability](screenshots/phoenix-observability.png)
+- LLM tracing
+- prompt inspection
+- retrieval monitoring
+- latency analysis
+- semantic reranking evaluation

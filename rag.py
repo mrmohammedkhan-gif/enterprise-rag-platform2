@@ -5,27 +5,6 @@ from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
 
-from openinference.instrumentation.openai import OpenAIInstrumentor
-from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import SimpleSpanProcessor
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-
-trace.set_tracer_provider(TracerProvider())
-
-tracer_provider = trace.get_tracer_provider()
-
-tracer_provider.add_span_processor(
-    SimpleSpanProcessor(
-        OTLPSpanExporter(endpoint="http://localhost:6006/v1/traces")
-    )
-)
-
-OpenAIInstrumentor().instrument()
-
-
-
-
 load_dotenv()
 
 openai_client = AzureOpenAI(
@@ -47,7 +26,7 @@ def embed_query(query):
     )
     return response.data[0].embedding
 
-def retrieve_documents(query, top_k=5):
+def retrieve_documents(query, top_k=10):
     query_vector = embed_query(query)
 
     vector_query = VectorizedQuery(
@@ -65,8 +44,52 @@ def retrieve_documents(query, top_k=5):
 
     return list(results)
 
+def rerank_documents(query, docs, top_n=3):
+    rerank_prompt = f"""
+You are a retrieval reranker.
+
+Select the {top_n} most relevant document numbers for answering the question.
+
+Question:
+{query}
+
+Documents:
+"""
+
+    for i, doc in enumerate(docs, start=1):
+        rerank_prompt += f"\nDocument {i}:\nSource: {doc['source']}\nContent: {doc['content']}\n"
+
+    response = openai_client.chat.completions.create(
+        model=os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT"),
+        messages=[
+            {
+                "role": "system",
+                "content": "Return only document numbers separated by commas. Example: 1,3,5"
+            },
+            {
+                "role": "user",
+                "content": rerank_prompt
+            }
+        ],
+        temperature=0
+    )
+
+    selected_text = response.choices[0].message.content
+    selected_indexes = []
+
+    for item in selected_text.replace(" ", "").split(","):
+        if item.isdigit():
+            index = int(item) - 1
+            if 0 <= index < len(docs):
+                selected_indexes.append(index)
+
+    reranked_docs = [docs[i] for i in selected_indexes]
+
+    return reranked_docs[:top_n]
+
 def generate_answer(query):
-    docs = retrieve_documents(query)
+    docs = retrieve_documents(query, top_k=10)
+    docs = rerank_documents(query, docs, top_n=3)
 
     context = "\n\n".join([
         f"Source: {doc['source']}\nContent: {doc['content']}"
