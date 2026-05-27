@@ -5,6 +5,27 @@ from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
 
+from openinference.instrumentation.openai import OpenAIInstrumentor
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+
+trace.set_tracer_provider(TracerProvider())
+
+tracer_provider = trace.get_tracer_provider()
+
+tracer_provider.add_span_processor(
+    SimpleSpanProcessor(
+        OTLPSpanExporter(endpoint="http://localhost:6006/v1/traces")
+    )
+)
+
+OpenAIInstrumentor().instrument()
+
+
+
+
 load_dotenv()
 
 openai_client = AzureOpenAI(
