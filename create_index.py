@@ -29,7 +29,7 @@ try:
     client.delete_index(index_name)
     print(f"Deleted existing index: {index_name}")
 except ResourceNotFoundError:
-    print("No existing index found. Creating new index.")
+    print("No existing index found.")
 
 fields = [
     SimpleField(name="id", type=SearchFieldDataType.String, key=True),
@@ -39,7 +39,7 @@ fields = [
         name="contentVector",
         type=SearchFieldDataType.Collection(SearchFieldDataType.Single),
         searchable=True,
-        vector_search_dimensions=3072,
+        vector_search_dimensions=1536,
         vector_search_profile_name="vector-profile"
     )
 ]
@@ -64,4 +64,4 @@ index = SearchIndex(
 
 client.create_index(index)
 
-print("Azure AI Search vector index created successfully")
+print("Created Azure AI Search index with 1536 vector dimensions")

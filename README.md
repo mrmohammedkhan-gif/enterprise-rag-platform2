@@ -1,29 +1,22 @@
 # Enterprise RAG Evaluation & Observability Platform
 
-A Streamlit-based enterprise Retrieval-Augmented Generation platform built with Azure OpenAI, Azure AI Search, vector embeddings, PDF ingestion, and grounded response generation.
+An enterprise Retrieval-Augmented Generation (RAG) application built with Azure OpenAI, Azure AI Search, vector embeddings, PDF ingestion, and Streamlit.
 
-## Features
+The platform retrieves enterprise documents, generates grounded answers, and exposes retrieved context for transparency and evaluation.
 
-- Azure OpenAI chat integration
+## Key Features
+
+- Azure OpenAI chat completion
 - Azure OpenAI embeddings
 - Azure AI Search vector retrieval
 - Hybrid keyword + vector search
 - PDF and TXT document ingestion
 - Streamlit chat interface
 - Retrieved context transparency
-- Grounded answers with source citations
+- Grounded responses with source citations
 - Hallucination-resistant prompt design
-- Evaluation script for retrieval testing
-
-## Tech Stack
-
-Python  
-Streamlit  
-Azure OpenAI  
-Azure AI Search  
-Azure Blob Storage  
-Vector Embeddings  
-PDF Processing  
+- Retrieval evaluation workflow
+- Azure Blob Storage ingestion support
 
 ## Architecture
 
@@ -32,12 +25,12 @@ User Question
    ↓
 Streamlit App
    ↓
-Azure OpenAI Embedding
+Azure OpenAI Embedding Model
    ↓
-Azure AI Search Vector Retrieval
+Azure AI Search Vector + Hybrid Retrieval
    ↓
-Retrieved Context
+Retrieved Document Chunks
    ↓
-Azure OpenAI Chat Completion
+Azure OpenAI Chat Model
    ↓
 Grounded Answer + Sources
